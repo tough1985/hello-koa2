@@ -8,11 +8,20 @@ var app = require('../app');
 var debug = require('debug')('demo:server');
 var http = require('http');
 
+//引入配置文件
+var config = require('../config');
+
+console.log("process.env.NODE_ENV=" + process.env.NODE_ENV);
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+// 将端口号设置为配置文件的端口号，默认值为3000
+var port = normalizePort(config.port || '3000');
+// 打印输出端口号
+console.log('port = ' + config.port);
+
+// var port = normalizePort(process.env.PORT || '3000');
 // app.set('port', port);
 
 /**
