@@ -55,7 +55,7 @@ var formatError = function (ctx, err, resTime) {
     logText += "\n" + "*************** error log start ***************" + "\n";
 
     //添加请求日志
-    logText += formatReqLog(ctx.resquest, resTime);
+    logText += formatReqLog(ctx.request, resTime);
 
     //错误名称
     logText += "err name: " + err.name + "\n";
