@@ -12,6 +12,9 @@ const logger = require('koa-logger');
 const index = require('./routes/index');
 const users = require('./routes/users');
 
+//log工具
+const logUtil = require('./utils/log_util');
+
 // middlewares
 app.use(convert(bodyparser));
 app.use(convert(json()));
@@ -24,11 +27,25 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async (ctx, next) => {
+  //响应开始时间
   const start = new Date();
-  await next();
-  const ms = new Date() - start;
-  console.log("change");
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+  //响应间隔时间
+  var ms;
+  try {
+    //开始进入到下一个中间件
+    await next();
+
+    ms = new Date() - start;
+    //记录响应日志
+    logUtil.logResponse(ctx, ms);
+
+  } catch (error) {
+    
+    ms = new Date() - start;
+    //记录异常日志
+    logUtil.logError(ctx, error, ms);
+  }
+
 });
 
 router.use('/', index.routes(), index.allowedMethods());
@@ -36,7 +53,6 @@ router.use('/users', users.routes(), users.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response
-
 app.on('error', function(err, ctx){
   console.log(err)
   logger.error('server error', err, ctx);
