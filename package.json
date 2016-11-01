@@ -6,7 +6,7 @@
     "start": "NODE_ENV=development ./node_modules/.bin/nodemon bin/run",
     "koa": "./node_modules/.bin/runkoa bin/www",
     "pm2": "pm2 start bin/run ",
-    "test": "NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register",
     "start_koa": "bin/run"
   },
   "dependencies": {
@@ -26,6 +26,9 @@
     "runkoa": "^1.3.1"
   },
   "devDependencies": {
-    "nodemon": "^1.8.1"
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2",
+    "nodemon": "^1.8.1",
+    "supertest": "^2.0.1"
   }
 }
